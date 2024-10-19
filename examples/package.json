@@ -1,0 +1,27 @@
+{
+  "name": "translate-examples",
+  "version": "1.0.0",
+  "author": "Toil",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FOSWLY/translate"
+  },
+  "devDependencies": {
+    "ofetch": "^1.3.4",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/FOSWLY/translate/issues"
+  },
+  "description": "Usage example of translate",
+  "engines": {
+    "node": ">=18"
+  },
+  "homepage": "https://github.com/FOSWLY/translate",
+  "license": "MIT",
+  "scripts": {},
+  "type": "module"
+}
