@@ -1,6 +1,6 @@
 {
   "name": "@toil/translate",
-  "description": "An unofficial library to use Yandex Translation API for free",
+  "description": "A library for free and not only using various translation APIs",
   "version": "1.0.0",
   "author": "Toil",
   "license": "MIT",
@@ -8,6 +8,7 @@
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
+  "homepage": "https://github.com/FOSWLY/translate",
   "devDependencies": {
     "@sinclair/typebox-codegen": "^0.10.5",
     "@types/bun": "latest",
@@ -55,6 +56,11 @@
       "require": "./dist/types/index.js",
       "import": "./dist/types/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./typebox": {
+      "require": "./dist/typebox/client.js",
+      "import": "./dist/typebox/client.js",
+      "types": "./dist/typebox/client.d.ts"
     }
   },
   "bugs": {
@@ -66,7 +72,6 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/FOSWLY/translate",
   "keywords": [
     "yandex",
     "foswly",
@@ -76,6 +81,9 @@
     "langs",
     "language"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "bun test",
     "build:default": "tsc --project tsconfig.build.json --outdir ./dist && tsc-esm-fix --tsconfig tsconfig.build.json",
