@@ -163,6 +163,7 @@ export default class YandexTranslateProvider extends BaseProvider {
     text: string | string[],
     lang: Lang = "en-ru",
     options: TranslateOptions = TranslateOptions.default,
+    format: "text" | "html" = "text",
   ) {
     if (!Array.isArray(text)) {
       text = [text];
@@ -181,8 +182,7 @@ export default class YandexTranslateProvider extends BaseProvider {
       target_lang: toLang,
       // paste / ocr / type-end
       reason: "paste",
-      // html / text
-      format: "text",
+      format,
       // 0 - default
       // 1 - add random spaces before symbols + don't translate set of chars like testdfgdsazd
       // 2 - translate with html tags names (bad quality of translation + don't translate unknown words like test123), maybe it's enable old version

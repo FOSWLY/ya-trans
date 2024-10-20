@@ -37,7 +37,7 @@ export default class YandexTranslateProvider extends BaseProvider {
     isSuccessProviderRes<T>(res: ProviderResponse<T>): res is ProviderSuccessResponse<T>;
     request<T extends object>(path: string, body?: URLSearchParams | null, headers?: Record<string, string>, method?: RequestMethod): Promise<ProviderResponse<T>>;
     createSession(): Promise<Session>;
-    rawTranslate(text: string | string[], lang?: Lang, options?: TranslateOptions): Promise<{
+    rawTranslate(text: string | string[], lang?: Lang, options?: TranslateOptions, format?: "text" | "html"): Promise<{
         lang: `${string}-${string}`;
         translations: string[];
         align: string[] | undefined;

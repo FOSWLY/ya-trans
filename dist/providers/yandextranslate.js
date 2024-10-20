@@ -93,7 +93,7 @@ export default class YandexTranslateProvider extends BaseProvider {
         }
         return res.data.session;
     }
-    async rawTranslate(text, lang = "en-ru", options = TranslateOptions.default) {
+    async rawTranslate(text, lang = "en-ru", options = TranslateOptions.default, format = "text") {
         if (!Array.isArray(text)) {
             text = [text];
         }
@@ -108,7 +108,7 @@ export default class YandexTranslateProvider extends BaseProvider {
             source_lang: fromLang,
             target_lang: toLang,
             reason: "paste",
-            format: "text",
+            format,
             strategy: "0",
             disable_cache: "false",
             ajax: "1",

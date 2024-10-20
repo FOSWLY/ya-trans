@@ -32,7 +32,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
         maxAge: number;
         token: string;
     }>;
-    rawTranslate(text: string | string[], lang?: Lang, profanityAction?: ProfanityAction): Promise<RawTranslateResponse>;
+    rawTranslate(text: string | string[], lang?: Lang, profanityAction?: ProfanityAction, textType?: "html" | "plain"): Promise<RawTranslateResponse>;
     translate(text: string | string[], lang?: Lang): Promise<TranslationResponse>;
     rawDetect(text: string | string[]): Promise<{
         score: number;

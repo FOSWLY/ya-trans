@@ -1,3 +1,7 @@
+# 1.0.2
+
+- Added text format param for rawTranslate method for MSEdge and YandexTranslate
+
 # 1.0.1
 
 - Fix providers export

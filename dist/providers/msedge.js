@@ -85,7 +85,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
             token,
         };
     }
-    async rawTranslate(text, lang = "en-ru", profanityAction = ProfanityAction.NoAction) {
+    async rawTranslate(text, lang = "en-ru", profanityAction = ProfanityAction.NoAction, textType = "plain") {
         if (!Array.isArray(text)) {
             text = [text];
         }
@@ -98,7 +98,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
         const params = this.getParams({
             from: fromLang,
             to: toLang,
-            textType: "plain",
+            textType,
             profanityAction,
         });
         const textArray = text.map((val) => ({ Text: val }));

@@ -149,6 +149,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     text: string | string[],
     lang: Lang = "en-ru",
     profanityAction: ProfanityAction = ProfanityAction.NoAction,
+    textType: "html" | "plain" = "plain",
   ): Promise<RawTranslateResponse> {
     if (!Array.isArray(text)) {
       text = [text];
@@ -166,8 +167,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
       from: fromLang,
       // Api support specify several "to" for translation into several languages at once, but I did not implement this
       to: toLang,
-      // html / plain
-      textType: "plain",
+      textType,
       profanityAction,
     });
 
