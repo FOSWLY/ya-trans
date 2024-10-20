@@ -13,29 +13,49 @@ import {
 } from "@/types/providers/base";
 import { fetchWithTimeout } from "@/utils/utils";
 
-export class BaseProvider {
-  apiUrl: string;
-  origin: string;
+export default class BaseProvider {
+  apiUrl!: string;
+  apiExtra?: unknown;
+  apiKey?: string;
+  origin!: string;
+  apiUrlPlaceholder = config.originPlaceholder;
+  originPlaceholder = config.originPlaceholder;
   fetch: FetchFunction;
   headers: Record<string, unknown> = {};
   fetchOpts: Record<string, unknown>;
+  baseLang = config.baseLang;
 
   constructor({
     fetchFn = fetchWithTimeout,
     fetchOpts = {},
-    apiUrl = config.originPlaceholder,
+    apiUrl = this.apiUrlPlaceholder,
+    apiExtra,
+    apiKey,
+    origin,
     headers = {},
   }: BaseProviderOpts = {}) {
     this.fetch = fetchFn;
     this.fetchOpts = fetchOpts;
-    this.apiUrl = /^(http(s)?):\/\//.test(String(apiUrl))
-      ? apiUrl
-      : config.originPlaceholder;
-    this.origin = this.apiUrl.split("/", 3).join("/");
+    this.apiExtra = apiExtra;
+    this.apiKey = apiKey;
+    this.updateData({ apiUrl, headers, origin });
+  }
+
+  updateData({ apiUrl, headers, origin }: Partial<BaseProviderOpts> = {}) {
+    this.apiUrl = this.isValidUrl(apiUrl) ? apiUrl : this.apiUrlPlaceholder;
+    const originPlaceholder =
+      this.originPlaceholder !== config.originPlaceholder
+        ? this.originPlaceholder
+        : this.apiUrl.split("/", 3).join("/");
+    this.origin = this.isValidUrl(origin) ? origin : originPlaceholder;
     this.headers = {
       ...this.headers,
-      headers,
+      ...headers,
     };
+  }
+
+  isValidUrl(url: string | undefined): url is string {
+    return /^(http(s)?):\/\//.test(String(url));
   }
 
   getOpts(

@@ -1,8 +1,9 @@
-import { BaseProvider } from "./base";
-
+import BaseProvider from "./base";
 import config from "@/config/config";
+
 import { Lang } from "@/types/client";
 import {
+  BaseProviderOpts,
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
@@ -34,15 +35,19 @@ export default class YandexTranslateProvider extends BaseProvider {
   MAX_UID = Number(10000000000000000000n);
   NANO_DIFF = 1000000;
 
-  apiOrigin = "https://translate.yandex.net/api/v1/tr.json";
-  sessionOrigin = "https://translate.yandex.ru/props/api/v1.0";
-  origin = "https://translate.yandex.ru";
+  sessionUrl = "https://translate.yandex.ru/props/api/v1.0";
+  apiUrlPlaceholder = "https://translate.yandex.net/api/v1/tr.json";
+  originPlaceholder = "https://translate.yandex.ru";
   headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     "User-Agent": config.userAgent,
   };
-  baseLang = config.baseLang;
   session: Session | null = null;
+
+  constructor(options: BaseProviderOpts = {}) {
+    super(options);
+    this.updateData(options);
+  }
 
   genYandexUID() {
     // eslint-disable-next-line sonarjs/pseudo-random
@@ -120,9 +125,7 @@ export default class YandexTranslateProvider extends BaseProvider {
   ): Promise<ProviderResponse<T>> {
     const options = this.getOpts(body, headers, method);
     try {
-      const origin = path.includes("/sessions")
-        ? this.sessionOrigin
-        : this.apiOrigin;
+      const origin = path.includes("/sessions") ? this.sessionUrl : this.apiUrl;
       const res = await this.fetch(`${origin}${path}`, options);
       const data = (await res.json()) as T;
       if (this.isErrorRes<T>(res, data)) {

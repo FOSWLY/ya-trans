@@ -1,8 +1,9 @@
-import { BaseProvider } from "./base";
-
+import BaseProvider from "./base";
 import config from "@/config/config";
+
 import { Lang } from "@/types/client";
 import {
+  BaseProviderOpts,
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
@@ -29,13 +30,18 @@ import {
  * The total limit of characters per request is 10k chars
  */
 export default class YandexBrowserProvider extends BaseProvider {
-  apiOrigin = "https://browser.translate.yandex.net/api/v1/tr.json";
-  origin = "https://youtube.com";
+  apiUrlPlaceholder = "https://browser.translate.yandex.net/api/v1/tr.json";
+  originPlaceholder = "https://youtube.com";
   headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     "User-Agent": config.userAgent,
   };
   srv = "browser_video_translation";
+
+  constructor(options: BaseProviderOpts = {}) {
+    super(options);
+    this.updateData(options);
+  }
 
   getOpts(
     body: unknown,
@@ -97,7 +103,7 @@ export default class YandexBrowserProvider extends BaseProvider {
     const options = this.getOpts(body, headers, method);
 
     try {
-      const res = await this.fetch(`${this.apiOrigin}${path}`, options);
+      const res = await this.fetch(`${this.apiUrl}${path}`, options);
       const data = (await res.json()) as T;
       if (!this.isMinimalResponse(data)) {
         return {

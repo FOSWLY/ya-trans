@@ -1,8 +1,9 @@
-import { BaseProvider } from "./base";
-
+import BaseProvider from "./base";
 import config from "@/config/config";
+
 import { Lang } from "@/types/client";
 import {
+  BaseProviderOpts,
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
@@ -29,13 +30,17 @@ import {
  * Detect limit is 1k chars
  */
 export default class YandexCloudProvider extends BaseProvider {
-  apiOrigin = "https://cloud.yandex.ru/api/translate";
-  origin = "https://cloud.yandex.ru";
+  apiUrlPlaceholder = "https://cloud.yandex.ru/api/translate";
+  originPlaceholder = "https://cloud.yandex.ru";
   headers = {
     "Content-Type": "application/json",
     "User-Agent": config.userAgent,
   };
-  baseLang = config.baseLang;
+
+  constructor(options: BaseProviderOpts = {}) {
+    super(options);
+    this.updateData(options);
+  }
 
   getOpts(
     body: unknown,
@@ -77,7 +82,7 @@ export default class YandexCloudProvider extends BaseProvider {
     const options = this.getOpts(body, headers, method);
 
     try {
-      const res = await this.fetch(`${this.apiOrigin}${path}`, options);
+      const res = await this.fetch(`${this.apiUrl}${path}`, options);
       const data = (await res.json()) as T;
       if (this.isErrorRes<T>(res, data)) {
         throw new ProviderError(data.message ?? res.statusText);

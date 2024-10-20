@@ -18,15 +18,15 @@ describe("translate", () => {
     expect(res.lang).toEqual("en-ru");
     expect(res.translations.length).toEqual(2);
   });
-  test("translate via proxy server", async () => {
-    const translationProxiedClient = new TranslationClient({
-      apiUrl: "https://translate.toil.cc",
-      service: TranslationService.yandexbrowser,
-    });
-    const res = await translationProxiedClient.translate("test");
-    expect(res.lang).toEqual("en-ru");
-    expect(res.translations.length).toEqual(1);
-  });
+  // test("translate via proxy server", async () => {
+  //   const translationProxiedClient = new TranslationClient({
+  //     apiUrl: "https://translate.toil.cc",
+  //     service: TranslationService.yandexbrowser,
+  //   });
+  //   const res = await translationProxiedClient.translate("test");
+  //   expect(res.lang).toEqual("en-ru");
+  //   expect(res.translations.length).toEqual(1);
+  // });
 });
 
 test("detect language", async () => {

@@ -6,10 +6,11 @@ import YandexCloudProvider from "./yandexcloud";
 import YandexTranslateProvider from "./yandextranslate";
 import MSEdgeTranslateProvider from "./msedge";
 
-export * as YandexBrowserProvider from "./yandexbrowser";
-export * as YandexCloudProvider from "./yandexcloud";
-export * as YandexTranslateProvider from "./yandextranslate";
-export * as MSEdgeTranslateProvider from "./msedge";
+export { default as BaseProvider } from "./base";
+export { default as YandexBrowserProvider } from "./yandexbrowser";
+export { default as YandexCloudProvider } from "./yandexcloud";
+export { default as YandexTranslateProvider } from "./yandextranslate";
+export { default as MSEdgeTranslateProvider } from "./msedge";
 
 export const availableProviders = {
   [TranslationService.yandexbrowser]: YandexBrowserProvider,

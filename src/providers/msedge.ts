@@ -1,8 +1,8 @@
-import { BaseProvider } from "./base";
+import BaseProvider from "./base";
 
-import config from "@/config/config";
 import { Lang } from "@/types/client";
 import {
+  BaseProviderOpts,
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
@@ -28,16 +28,20 @@ import {
 import { getTimestamp } from "@/utils/utils";
 
 export default class MSEdgeTranslateProvider extends BaseProvider {
-  apiOrigin = "https://api-edge.cognitive.microsofttranslator.com";
-  sessionOrigin = "https://edge.microsoft.com";
-  origin = "https://www.bing.com";
+  apiUrlPlaceholder = "https://api-edge.cognitive.microsofttranslator.com";
+  sessionUrl = "https://edge.microsoft.com";
+  originPlaceholder = "https://www.bing.com";
   headers = {
     "Content-Type": "application/json",
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0",
   };
-  baseLang = config.baseLang;
   session: Session | null = null;
+
+  constructor(options: BaseProviderOpts = {}) {
+    super(options);
+    this.updateData(options);
+  }
 
   async getSession() {
     const timestamp = getTimestamp();
@@ -98,7 +102,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
   ): Promise<ProviderResponse<T>> {
     const options = this.getOpts(body, headers, method);
     try {
-      const res = await this.fetch(`${this.apiOrigin}${path}`, options);
+      const res = await this.fetch(`${this.apiUrl}${path}`, options);
       const data = (await res.json()) as T;
       if (this.isErrorRes<T>(res, data)) {
         throw new ProviderError(data.error?.message ?? res.statusText);
@@ -119,7 +123,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
   async createSession() {
     const options = this.getOpts(null, undefined, "GET");
     const res = await this.fetch(
-      `${this.sessionOrigin}/translate/auth`,
+      `${this.sessionUrl}/translate/auth`,
       options,
     ).catch(() => null);
     if (!res || res.status !== 200) {
