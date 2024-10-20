@@ -6,7 +6,7 @@ import {
   TranslationService,
 } from "@/types/client";
 import TranslationProvider from "@/providers";
-import { BaseProvider } from "@/providers/base";
+import BaseProvider from "@/providers/base";
 
 export default class TranslationClient {
   /**
@@ -28,6 +28,7 @@ export default class TranslationClient {
   apiUrl: string | undefined;
   apiKey: string | undefined;
   apiExtra: unknown;
+  origin: string | undefined;
 
   /**
    * Adds headers to the list of headers
@@ -43,6 +44,7 @@ export default class TranslationClient {
     apiUrl = undefined,
     apiKey = undefined,
     apiExtra = undefined,
+    origin = undefined,
     headers = {},
   }: TranslationOpts = {}) {
     this.changeService({
@@ -52,6 +54,7 @@ export default class TranslationClient {
       apiUrl,
       apiKey,
       apiExtra,
+      origin,
       headers,
     });
   }
@@ -66,6 +69,7 @@ export default class TranslationClient {
     apiUrl = this.apiUrl,
     apiKey = this.apiKey,
     apiExtra = this.apiExtra,
+    origin = this.origin,
     headers = this.headers,
   }: TranslationOpts = {}) {
     this.service = service;
@@ -75,12 +79,14 @@ export default class TranslationClient {
     this.apiKey = apiKey;
     this.apiExtra = apiExtra;
     this.headers = headers;
+    this.origin = origin;
     this.provider = new TranslationProvider({
       fetchFn: this.fetch,
       fetchOpts: this.fetchOpts,
       apiUrl: this.apiUrl ?? undefined,
       apiKey: this.apiKey ?? undefined,
       apiExtra: this.apiExtra ?? undefined,
+      origin: this.origin ?? undefined,
       headers: this.headers,
     }).getProvider(this.service);
   }
