@@ -1,17 +1,17 @@
-import { BaseProvider } from "./base.js";
-import { Lang } from "@/types/client";
-import { DetectResponse, GetLangsResponse, ProviderResponse, ProviderSuccessResponse, RequestMethod, TranslationResponse } from "@/types/providers/base";
-import { FailedResponse, ProfanityAction, RawTranslateResponse, Session } from "@/types/providers/msedge";
+import BaseProvider from "./base.js";
+import { Lang } from "../types/client.js";
+import { BaseProviderOpts, DetectResponse, GetLangsResponse, ProviderResponse, ProviderSuccessResponse, RequestMethod, TranslationResponse } from "../types/providers/base.js";
+import { FailedResponse, ProfanityAction, RawTranslateResponse, Session } from "../types/providers/msedge.js";
 export default class MSEdgeTranslateProvider extends BaseProvider {
-    apiOrigin: string;
-    sessionOrigin: string;
-    origin: string;
+    apiUrlPlaceholder: string;
+    sessionUrl: string;
+    originPlaceholder: string;
     headers: {
         "Content-Type": string;
         "User-Agent": string;
     };
-    baseLang: string;
     session: Session | null;
+    constructor(options?: BaseProviderOpts);
     getSession(): Promise<Session>;
     getOpts(body: string | null, headers?: Record<string, string>, method?: RequestMethod): {
         method: RequestMethod;

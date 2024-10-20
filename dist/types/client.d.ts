@@ -14,6 +14,7 @@ export type TranslationOpts = {
     apiUrl?: string;
     apiKey?: string;
     apiExtra?: unknown;
+    origin?: string;
     headers?: Record<string, unknown>;
 };
 //# sourceMappingURL=client.d.ts.map

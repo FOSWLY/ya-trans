@@ -1,20 +1,23 @@
-import { BaseProvider } from "./base.js";
-import config from "@/config/config";
-import { DetectOptions, TranslateOptions, } from "@/types/providers/yandextranslate";
-import { DetectEmptyLangError, DetectError, GetLangsError, ProviderError, TranslateError, } from "@/errors";
-import { getTimestamp } from "@/utils/utils";
+import BaseProvider from "./base.js";
+import config from "../config/config.js";
+import { DetectOptions, TranslateOptions, } from "../types/providers/yandextranslate.js";
+import { DetectEmptyLangError, DetectError, GetLangsError, ProviderError, TranslateError, } from "../errors.js";
+import { getTimestamp } from "../utils/utils.js";
 export default class YandexTranslateProvider extends BaseProvider {
     MAX_UID = Number(10000000000000000000n);
     NANO_DIFF = 1000000;
-    apiOrigin = "https://translate.yandex.net/api/v1/tr.json";
-    sessionOrigin = "https://translate.yandex.ru/props/api/v1.0";
-    origin = "https://translate.yandex.ru";
+    sessionUrl = "https://translate.yandex.ru/props/api/v1.0";
+    apiUrlPlaceholder = "https://translate.yandex.net/api/v1/tr.json";
+    originPlaceholder = "https://translate.yandex.ru";
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": config.userAgent,
     };
-    baseLang = config.baseLang;
     session = null;
+    constructor(options = {}) {
+        super(options);
+        this.updateData(options);
+    }
     genYandexUID() {
         return BigInt(Math.floor(Math.random() * this.MAX_UID)).toString();
     }
@@ -65,9 +68,7 @@ export default class YandexTranslateProvider extends BaseProvider {
     async request(path, body = null, headers = {}, method = "POST") {
         const options = this.getOpts(body, headers, method);
         try {
-            const origin = path.includes("/sessions")
-                ? this.sessionOrigin
-                : this.apiOrigin;
+            const origin = path.includes("/sessions") ? this.sessionUrl : this.apiUrl;
             const res = await this.fetch(`${origin}${path}`, options);
             const data = (await res.json());
             if (this.isErrorRes(res, data)) {

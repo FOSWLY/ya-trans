@@ -1,15 +1,15 @@
-import { BaseProvider } from "./base.js";
-import { Lang } from "@/types/client";
-import { DetectResponse, GetLangsResponse, ProviderResponse, ProviderSuccessResponse, RequestMethod, TranslationResponse } from "@/types/providers/base";
-import { FailedResponse } from "@/types/providers/yandexcloud";
+import BaseProvider from "./base.js";
+import { Lang } from "../types/client.js";
+import { BaseProviderOpts, DetectResponse, GetLangsResponse, ProviderResponse, ProviderSuccessResponse, RequestMethod, TranslationResponse } from "../types/providers/base.js";
+import { FailedResponse } from "../types/providers/yandexcloud.js";
 export default class YandexCloudProvider extends BaseProvider {
-    apiOrigin: string;
-    origin: string;
+    apiUrlPlaceholder: string;
+    originPlaceholder: string;
     headers: {
         "Content-Type": string;
         "User-Agent": string;
     };
-    baseLang: string;
+    constructor(options?: BaseProviderOpts);
     getOpts(body: unknown, headers?: Record<string, string>, method?: RequestMethod): {
         method: RequestMethod;
         headers: {

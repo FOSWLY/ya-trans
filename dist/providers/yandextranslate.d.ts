@@ -1,19 +1,19 @@
-import { BaseProvider } from "./base.js";
-import { Lang } from "@/types/client";
-import { DetectResponse, GetLangsResponse, ProviderResponse, ProviderSuccessResponse, RequestMethod, TranslationResponse } from "@/types/providers/base";
-import { DetectOptions, FailedResponse, Session, Srv, TranslateOptions } from "@/types/providers/yandextranslate";
+import BaseProvider from "./base.js";
+import { Lang } from "../types/client.js";
+import { BaseProviderOpts, DetectResponse, GetLangsResponse, ProviderResponse, ProviderSuccessResponse, RequestMethod, TranslationResponse } from "../types/providers/base.js";
+import { DetectOptions, FailedResponse, Session, Srv, TranslateOptions } from "../types/providers/yandextranslate.js";
 export default class YandexTranslateProvider extends BaseProvider {
     MAX_UID: number;
     NANO_DIFF: number;
-    apiOrigin: string;
-    sessionOrigin: string;
-    origin: string;
+    sessionUrl: string;
+    apiUrlPlaceholder: string;
+    originPlaceholder: string;
     headers: {
         "Content-Type": string;
         "User-Agent": string;
     };
-    baseLang: string;
     session: Session | null;
+    constructor(options?: BaseProviderOpts);
     genYandexUID(): string;
     genYandexMetrikaUID(): string;
     getSecure(srv: Srv): {

@@ -1,12 +1,19 @@
-import { FetchFunction, Lang } from "@/types/client";
-import { BaseProviderOpts, DetectResponse, GetLangsResponse, ProviderResponse, RequestMethod, TranslationResponse } from "@/types/providers/base";
-export declare class BaseProvider {
+import { FetchFunction, Lang } from "../types/client.js";
+import { BaseProviderOpts, DetectResponse, GetLangsResponse, ProviderResponse, RequestMethod, TranslationResponse } from "../types/providers/base.js";
+export default class BaseProvider {
     apiUrl: string;
+    apiExtra?: unknown;
+    apiKey?: string;
     origin: string;
+    apiUrlPlaceholder: string;
+    originPlaceholder: string;
     fetch: FetchFunction;
     headers: Record<string, unknown>;
     fetchOpts: Record<string, unknown>;
-    constructor({ fetchFn, fetchOpts, apiUrl, headers, }?: BaseProviderOpts);
+    baseLang: string;
+    constructor({ fetchFn, fetchOpts, apiUrl, apiExtra, apiKey, origin, headers, }?: BaseProviderOpts);
+    updateData({ apiUrl, headers, origin }?: Partial<BaseProviderOpts>): void;
+    isValidUrl(url: string | undefined): url is string;
     getOpts(body: unknown, headers?: Record<string, string>, method?: RequestMethod): {
         method: RequestMethod;
         headers: {

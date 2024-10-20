@@ -1,14 +1,17 @@
-import { BaseProvider } from "./base.js";
-import config from "@/config/config";
-import { DetectEmptyLangError, DetectError, GetLangsError, ProviderError, TranslateError, } from "@/errors";
+import BaseProvider from "./base.js";
+import config from "../config/config.js";
+import { DetectEmptyLangError, DetectError, GetLangsError, ProviderError, TranslateError, } from "../errors.js";
 export default class YandexCloudProvider extends BaseProvider {
-    apiOrigin = "https://cloud.yandex.ru/api/translate";
-    origin = "https://cloud.yandex.ru";
+    apiUrlPlaceholder = "https://cloud.yandex.ru/api/translate";
+    originPlaceholder = "https://cloud.yandex.ru";
     headers = {
         "Content-Type": "application/json",
         "User-Agent": config.userAgent,
     };
-    baseLang = config.baseLang;
+    constructor(options = {}) {
+        super(options);
+        this.updateData(options);
+    }
     getOpts(body, headers = {}, method = "POST") {
         return {
             method,
@@ -31,7 +34,7 @@ export default class YandexCloudProvider extends BaseProvider {
     async request(path, body = null, headers = {}, method = "POST") {
         const options = this.getOpts(body, headers, method);
         try {
-            const res = await this.fetch(`${this.apiOrigin}${path}`, options);
+            const res = await this.fetch(`${this.apiUrl}${path}`, options);
             const data = (await res.json());
             if (this.isErrorRes(res, data)) {
                 throw new ProviderError(data.message ?? res.statusText);

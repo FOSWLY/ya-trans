@@ -27,5 +27,6 @@ fetchOpts: Type.Optional(Type.Record(Type.String(), Type.Unknown())),
 apiUrl: Type.Optional(Type.String()),
 apiKey: Type.Optional(Type.String()),
 apiExtra: Type.Optional(Type.Unknown()),
+origin: Type.Optional(Type.String()),
 headers: Type.Optional(Type.Record(Type.String(), Type.Unknown()))
 })

@@ -1,14 +1,18 @@
-import { BaseProvider } from "./base.js";
-import config from "@/config/config";
-import { DetectEmptyLangError, DetectError, GetLangsError, ProviderError, TranslateError, } from "@/errors";
+import BaseProvider from "./base.js";
+import config from "../config/config.js";
+import { DetectEmptyLangError, DetectError, GetLangsError, ProviderError, TranslateError, } from "../errors.js";
 export default class YandexBrowserProvider extends BaseProvider {
-    apiOrigin = "https://browser.translate.yandex.net/api/v1/tr.json";
-    origin = "https://youtube.com";
+    apiUrlPlaceholder = "https://browser.translate.yandex.net/api/v1/tr.json";
+    originPlaceholder = "https://youtube.com";
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": config.userAgent,
     };
     srv = "browser_video_translation";
+    constructor(options = {}) {
+        super(options);
+        this.updateData(options);
+    }
     getOpts(body, headers = {}, method = "POST") {
         return {
             method,
@@ -48,7 +52,7 @@ export default class YandexBrowserProvider extends BaseProvider {
     async request(path, body = null, headers = {}, method = "POST") {
         const options = this.getOpts(body, headers, method);
         try {
-            const res = await this.fetch(`${this.apiOrigin}${path}`, options);
+            const res = await this.fetch(`${this.apiUrl}${path}`, options);
             const data = (await res.json());
             if (!this.isMinimalResponse(data)) {
                 return {

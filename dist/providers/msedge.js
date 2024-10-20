@@ -1,18 +1,20 @@
-import { BaseProvider } from "./base.js";
-import config from "@/config/config";
-import { ProfanityAction, } from "@/types/providers/msedge";
-import { DetectError, GetLangsError, ProviderError, TranslateError, } from "@/errors";
-import { getTimestamp } from "@/utils/utils";
+import BaseProvider from "./base.js";
+import { ProfanityAction, } from "../types/providers/msedge.js";
+import { DetectError, GetLangsError, ProviderError, TranslateError, } from "../errors.js";
+import { getTimestamp } from "../utils/utils.js";
 export default class MSEdgeTranslateProvider extends BaseProvider {
-    apiOrigin = "https://api-edge.cognitive.microsofttranslator.com";
-    sessionOrigin = "https://edge.microsoft.com";
-    origin = "https://www.bing.com";
+    apiUrlPlaceholder = "https://api-edge.cognitive.microsofttranslator.com";
+    sessionUrl = "https://edge.microsoft.com";
+    originPlaceholder = "https://www.bing.com";
     headers = {
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0",
     };
-    baseLang = config.baseLang;
     session = null;
+    constructor(options = {}) {
+        super(options);
+        this.updateData(options);
+    }
     async getSession() {
         const timestamp = getTimestamp();
         if (this.session &&
@@ -50,7 +52,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     async request(path, body = null, headers = {}, method = "POST") {
         const options = this.getOpts(body, headers, method);
         try {
-            const res = await this.fetch(`${this.apiOrigin}${path}`, options);
+            const res = await this.fetch(`${this.apiUrl}${path}`, options);
             const data = (await res.json());
             if (this.isErrorRes(res, data)) {
                 throw new ProviderError(data.error?.message ?? res.statusText);
@@ -69,7 +71,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     }
     async createSession() {
         const options = this.getOpts(null, undefined, "GET");
-        const res = await this.fetch(`${this.sessionOrigin}/translate/auth`, options).catch(() => null);
+        const res = await this.fetch(`${this.sessionUrl}/translate/auth`, options).catch(() => null);
         if (!res || res.status !== 200) {
             throw new ProviderError("Failed to request create session");
         }
