@@ -1,6 +1,6 @@
 {
   "name": "@toil/translate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Toil",
   "repository": {
     "type": "git",
@@ -13,10 +13,9 @@
     "@types/bun": "latest",
     "@types/eslint__js": "^8.42.3",
     "eslint": "^9.13.0",
-    "eslint-plugin-oxlint": "0.10.0",
-    "eslint-plugin-sonarjs": "^2.0.4",
+    "eslint-plugin-oxlint": "0.11.0",
     "husky": "^9.1.6",
-    "oxlint": "^0.10.0",
+    "oxlint": "^0.11.0",
     "tsc-alias": "^1.8.10",
     "tsc-esm-fix": "^3.1.0",
     "typedoc": "^0.26.10",
@@ -85,7 +84,7 @@
   },
   "scripts": {
     "test": "bun test",
-    "build:default": "tsc --project tsconfig.build.json --outdir ./dist && tsc-alias -p tsconfig.build.json &&  tsc-esm-fix --tsconfig tsconfig.build.json",
+    "build:default": "tsc --project tsconfig.build.json --outdir ./dist && tsc-alias -p tsconfig.build.json && tsc-esm-fix --tsconfig tsconfig.build.json",
     "build:typebox": "bun run ./scripts/typebox-gen.ts",
     "build:doc": "typedoc --options typedoc.json --tsconfig tsconfig.build.json",
     "build:bun": "bun build:default && bun build:typebox && bun build:doc",
