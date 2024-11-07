@@ -1,5 +1,5 @@
-import { TranslationService } from "@/types/client";
-import TranslationClient from "../dist/client";
+import { TranslationService } from "../dist/types/client.js";
+import TranslationClient from "../dist/client.js";
 
 const client = new TranslationClient({
   service: TranslationService.yandexbrowser,

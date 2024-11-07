@@ -38,9 +38,7 @@ const detectResult = await client.detect(
   "The quick brown fox jumps over the lazy dog",
 );
 
-const langs = await client.getLangs(
-  "The quick brown fox jumps over the lazy dog",
-);
+const langs = await client.getLangs();
 ```
 
 Вы можете увидеть больше примеров кода [здесь](https://github.com/FOSWLY/translate/tree/main/examples)
