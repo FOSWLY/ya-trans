@@ -13,7 +13,7 @@
     "@types/bun": "latest",
     "@types/eslint__js": "^8.42.3",
     "eslint": "^9.13.0",
-    "eslint-plugin-oxlint": "0.11.1",
+    "eslint-plugin-oxlint": "0.13.1",
     "husky": "^9.1.6",
     "oxlint": "^0.13.2",
     "tsc-alias": "^1.8.10",
