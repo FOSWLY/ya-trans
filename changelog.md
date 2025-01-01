@@ -1,3 +1,16 @@
+# 1.0.4
+
+## Lib
+
+- Added exports all types and
+
+## Workspace
+
+- Updated build logic
+- Now docs generating by GH actions
+- Removed dist and docs from git repo
+- Bump depends
+
 # 1.0.3
 
 - Fix invalid getLangs example in README
