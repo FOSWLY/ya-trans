@@ -2,7 +2,7 @@
 
 ## Lib
 
-- Added exports all types and
+- Added exports all types and providers
 
 ## Workspace
 
