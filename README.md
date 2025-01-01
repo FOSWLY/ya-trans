@@ -64,20 +64,10 @@ Don't forget to install the dependencies:
 bun install
 ```
 
-#### Regular Build
-
-Building the entire package:
+Start building:
 
 ```bash
-bun build:bun
-```
-
-#### Building a types for TypeBox
-
-You can use this build option if you only want to build types for TypeBox:
-
-```bash
-bun build:typebox
+bun build:all
 ```
 
 ## Tests

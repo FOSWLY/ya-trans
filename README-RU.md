@@ -64,20 +64,10 @@ const langs = await client.getLangs();
 bun install
 ```
 
-#### Обычная сборка
-
-Сборка всего пакета:
+Запустите сборку:
 
 ```bash
-bun build:bun
-```
-
-#### Сборка TypeBox типов
-
-Вы можете воспользоваться данным вариантом сборки, если вы хотите собрать, только, типы для TypeBox:
-
-```bash
-bun build:typebox
+bun build:all
 ```
 
 ## Тесты
