@@ -1,5 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
+  "includeVersion": true,
+  "name": "translate",
   "entryPoints": ["./src/index.ts"],
   "out": "docs",
   "plugin": ["typedoc-plugin-rename-defaults", "typedoc-plugin-include-example"]
